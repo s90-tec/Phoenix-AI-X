@@ -1,0 +1,41 @@
+services:
+  api:
+    build: .
+    env_file: .env
+    ports:
+      - "8000:8000"
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_started
+    profiles: ["platform"]
+  dashboard:
+    build: .
+    command: streamlit run src/phoenix_ai/dashboard/app.py --server.address 0.0.0.0 --server.port 8501
+    env_file: .env
+    ports:
+      - "8501:8501"
+    profiles: ["platform"]
+  postgres:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_DB: phoenix
+      POSTGRES_USER: phoenix
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-phoenix_local_only}
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U phoenix -d phoenix"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"
+volumes:
+  postgres_data:
+

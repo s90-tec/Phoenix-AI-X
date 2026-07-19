@@ -1,0 +1,47 @@
+# Python
+__pycache__/
+*.py[cod]
+*.so
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+coverage.xml
+htmlcov/
+*.egg-info/
+build/
+dist/
+
+# Environments and secrets
+.venv/
+venv/
+.env
+.env.*
+!.env.example
+.streamlit/secrets.toml
+
+# Data, model outputs and runtime artifacts
+datasets/raw/*
+!datasets/raw/.gitkeep
+datasets/processed/*
+!datasets/processed/.gitkeep
+datasets/external/*
+!datasets/external/.gitkeep
+models/checkpoints/*
+!models/checkpoints/.gitkeep
+models/trained/*
+!models/trained/.gitkeep
+reports/logs/*
+!reports/logs/.gitkeep
+reports/artifacts/*
+!reports/artifacts/.gitkeep
+reports/cache/*
+!reports/cache/.gitkeep
+mlruns/
+wandb/
+
+# Editor and OS
+.DS_Store
+.idea/
+.vscode/
+
